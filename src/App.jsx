@@ -22,6 +22,14 @@ export const App = () => {
       expiresAt: getNewExpirationTime(),
     },
   ]);
+
+  const addThought = (thought) => {
+    setThoughts((thoughts) => [thought, ...thoughts]);
+  }
+
+  const removeThought = (thoughtIdToRemove) => {
+    setThoughts((thoughts) => thoughts.filter((thought) => thought.id !== thoughtIdToRemove));
+  }
   
   return (
     <div className="App">
@@ -29,10 +37,10 @@ export const App = () => {
         <h1>Passing Thoughts</h1>
       </header>
       <main>
-        <AddThoughtForm />
+        <AddThoughtForm addThought={addThought} />
         <ul className="thoughts">
           {thoughts.map((thought) => (
-            <Thought key={thought.id} thought={thought} />
+            <Thought removeThought={removeThought} key={thought.id} thought={thought} />
           ))}
         </ul>
       </main>
